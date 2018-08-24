@@ -9,7 +9,7 @@ const app = express();
 const configRoute = require('./routes/config'); // Imports routes
 app.use('/api', configRoute);
 
-let port = 1234;
+let port = normalizePort(process.env.PORT || 1234);
 
 app.listen(port, () => {
     console.log('Server is up and running on port numner ' + port);
