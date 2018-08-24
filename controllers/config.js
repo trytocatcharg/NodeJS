@@ -2,22 +2,38 @@
 
 // Cargamos los modelos para usarlos posteriormente
 var Config = require('../models/config');
-
+const configValues = require('../config-values')
+const MongoClient = require('mongodb').MongoClient;
+const url = configValues.db;
 
 exports.getList= function(req,res){
-
-    var MongoClient = require('mongodb').MongoClient;
-    var url = "mongodb://tradingUser:MELIZZA.2011@ds125272.mlab.com:25272/trading_db";
-
     MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("trading_db");
     dbo.collection("config").find({}).toArray(function(err, result) {
-        if (err) throw err;
         console.log(result);
+        if (!result) return res.status(404).send({message: 'No existen resultados'})
+        if (err) throw err;
         db.close();
-        res.send(result);
+        res.status(200).send(result);
     });
+  });
+}
+
+
+exports.getByName=function(req,res){
+    let nameParam = req.params.name
+    
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("trading_db");
+        dbo.collection("config").find({name:nameParam}).toArray(function(err, result) {
+            console.log(result);
+            if (!result) return res.status(404).send({message: 'No existen resultados'})
+            if (err) throw err;
+            db.close();
+            res.status(200).send(result);
+        });
     });
 }
 
