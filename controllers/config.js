@@ -20,7 +20,6 @@ exports.getList= function(req,res){
   });
 }
 
-
 exports.getByName=function(req,res){
     let nameParam = req.params.name
     
@@ -39,10 +38,10 @@ exports.getByName=function(req,res){
 
 
 
-//Simple version, without validation or sanitation
-exports.test = function (req, res) {
-    res.send('Greetings from the Test controller!');
-};
+// //Simple version, without validation or sanitation
+// exports.test = function (req, res) {
+//     res.send('Greetings from the Test controller!');
+// };
 
 // // Conseguir datos de un usuario
 
