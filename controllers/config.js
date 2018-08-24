@@ -4,14 +4,14 @@
 var Config = require('../models/config');
 
 
-exports.getList= function(req,rest){
+exports.getList= function(req,res){
 
     var MongoClient = require('mongodb').MongoClient;
     var url = "mongodb://tradingUser:MELIZZA.2011@ds125272.mlab.com:25272/trading_db";
 
     MongoClient.connect(url, function(err, db) {
     if (err) throw err;
-    var dbo = db.db("mydb");
+    var dbo = db.db("trading_db");
     dbo.collection("config").find({}).toArray(function(err, result) {
         if (err) throw err;
         console.log(result);
