@@ -11,11 +11,11 @@ const configRoute = require('./routes/config'); // Imports routes
 const tradeRoute = require('./routes/trade'); // Imports routes
 const cors = require('cors');
 
+app.use(cors()); //https://github.com/expressjs/cors
 app.use('/api', configRoute);
 app.use('/api', tradeRoute);
 
-app.use(cors());
-app.options('*', cors());
+
 
 ///let port = normalizePort(process.env.PORT || 1234);
 let port =configValues.port;
