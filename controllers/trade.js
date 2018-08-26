@@ -2,7 +2,7 @@
 
 'use strict'
 
-var trade = require('../models/trade');
+var Trade = require('../models/trade');
 const configValues = require('../config-values')
 const MongoClient = require('mongodb').MongoClient;
 const url = configValues.db;
@@ -10,6 +10,24 @@ const common = require('../common/appCommon')
 var moment = require('moment');
 
 
+//Trae todos los registros de Trades
+exports.getAll=function(req,res){
+    console.log("ejecuta countAll");
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("trading_db");
+           dbo.collection("Trades").find().toArray(function(err, result) {
+            console.log(result);
+            if (!result) return res.status(500).send({message: 'internal error'})
+            if (err) throw err;
+            db.close();
+            res.status(200).send(result);
+        });
+    });
+}
+
+
+//Trae resultados de la semana. Se le envia una fecha calcula que semana es y devuelve resultados
 exports.getByWeek=function(req,res){
     /*The way to avoid issues of that sort is to include the strict mode Boolean argument in the constructor invocation. A value of true specifies that the format and input must match exactly, including delimiters:
     moment('2016 is a date', 'YYYY-MM-DD', true);  //no longer valid!*/

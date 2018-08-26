@@ -15,7 +15,8 @@ var TradeSchema = Schema({
     priceOut:       Number,
     stopLoss:       Number,
     stopProfit:     Number,
-    operation_type: String
+    operation_type: String,
+    year:           Number
 });
 
 module.exports = mongoose.model('Trades', TradeSchema);
