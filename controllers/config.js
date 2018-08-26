@@ -1,6 +1,5 @@
 'use strict'
 
-// Cargamos los modelos para usarlos posteriormente
 var Config = require('../models/config');
 const configValues = require('../config-values')
 const MongoClient = require('mongodb').MongoClient;
@@ -15,6 +14,7 @@ exports.getList= function(req,res){
         if (!result) return res.status(404).send({message: 'not found'})
         if (err) throw err;
         db.close();
+        res.header("Access-Control-Allow-Origin", "*");
         res.status(200).send(result);
     });
   });
