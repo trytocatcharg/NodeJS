@@ -12,7 +12,7 @@ exports.getList= function(req,res){
     var dbo = db.db("trading_db");
     dbo.collection("config").find({}).toArray(function(err, result) {
         console.log(result);
-        if (!result) return res.status(404).send({message: 'No existen resultados'})
+        if (!result) return res.status(404).send({message: 'not found'})
         if (err) throw err;
         db.close();
         res.status(200).send(result);
@@ -21,14 +21,14 @@ exports.getList= function(req,res){
 }
 
 exports.getByName=function(req,res){
-    let nameParam = req.params.name
-    
+    var nameParam = String(req.params.name);
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var dbo = db.db("trading_db");
-        dbo.collection("config").find({name:nameParam}).toArray(function(err, result) {
+        
+        dbo.collection("config").find({name:nameParam.toUpperCase()}).toArray(function(err, result) {
             console.log(result);
-            if (!result) return res.status(404).send({message: 'No existen resultados'})
+            if (!result) return res.status(404).send({message: 'not found'})
             if (err) throw err;
             db.close();
             res.status(200).send(result);
