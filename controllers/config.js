@@ -14,7 +14,7 @@ exports.getList= function(req,res){
         if (!result) return res.status(404).send({message: 'not found'})
         if (err) throw err;
         db.close();
-        res.header('Access-Control-Allow-Methods', 'GET');
+        res.header('Access-Control-Allow-Methods', 'OPTIONS,GET');
         res.header('Access-Control-Allow-Headers', 'Content-Type');
         res.header("Access-Control-Allow-Origin", "*");
         res.status(200).send(result);
@@ -33,7 +33,7 @@ exports.getByName=function(req,res){
             if (!result) return res.status(404).send({message: 'not found'})
             if (err) throw err;
             db.close();
-            res.header('Access-Control-Allow-Methods', 'GET');
+            res.header('Access-Control-Allow-Methods', 'OPTIONS,GET');
             res.header('Access-Control-Allow-Headers', 'Content-Type');
             res.header("Access-Control-Allow-Origin", "*");
             res.status(200).send(result);
