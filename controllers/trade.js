@@ -12,7 +12,6 @@ var moment = require('moment');
 
 //Trae todos los registros de Trades
 exports.getAll=function(req,res){
-    console.log("ejecuta countAll");
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var dbo = db.db("trading_db");
@@ -21,6 +20,7 @@ exports.getAll=function(req,res){
             if (!result) return res.status(500).send({message: 'internal error'})
             if (err) throw err;
             db.close();
+            
             res.status(200).send(result);
         });
     });

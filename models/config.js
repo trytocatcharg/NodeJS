@@ -10,7 +10,12 @@ var ConfigSchema = Schema({
     name: String,
     description: String,
     value: Number,
-    type: String
+    type: String,
+    href: String
 });
 
-module.exports = mongoose.model('Config', ConfigSchema);
+var Config = mongoose.model('Config', ConfigSchema);
+
+module.exports = {
+    ConfigModel: Config
+   };

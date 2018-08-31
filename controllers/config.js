@@ -1,3 +1,5 @@
+
+
 'use strict'
 
 var Config = require('../models/config');
@@ -14,31 +16,39 @@ exports.getList= function(req,res){
         if (!result) return res.status(404).send({message: 'not found'})
         if (err) throw err;
         db.close();
-        res.header('Access-Control-Allow-Methods', 'OPTIONS,GET');
-        res.header('Access-Control-Allow-Headers', 'Content-Type');
-        res.header("Access-Control-Allow-Origin", "*");
+
+        console.log(result);
+
+        result.forEach(element => {
+            element.href="/config/"+ element.id;    
+        });
+        
         res.status(200).send(result);
     });
   });
 }
 
-exports.getByName=function(req,res){
-    var nameParam = String(req.params.name);
+exports.getFilter=function(req,res){
+    var nameParam = String(req.params.param);
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var dbo = db.db("trading_db");
-        
-        dbo.collection("config").find({name:nameParam.toUpperCase()}).toArray(function(err, result) {
-            console.log(result);
+        var filter={name:nameParam.toUpperCase()};
+        if(!isNaN(Number(nameParam))){
+            filter={id:Number(nameParam)};
+        }
+      
+        dbo.collection("config").find(filter).toArray(function(err, result) {
             if (!result) return res.status(404).send({message: 'not found'})
             if (err) throw err;
             db.close();
-            res.header('Access-Control-Allow-Methods', 'OPTIONS,GET');
-            res.header('Access-Control-Allow-Headers', 'Content-Type');
-            res.header("Access-Control-Allow-Origin", "*");
+
+            result[0].href="/config/"+ result[0].id;
+            console.log(result);
             res.status(200).send(result);
         });
     });
+
 }
 
 
