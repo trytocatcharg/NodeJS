@@ -26,6 +26,24 @@ exports.getAll=function(req,res){
     });
 }
 
+exports.getByYear=function(req,res){
+    var year =parseInt(req.params.year);
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("trading_db");
+        var filter = {year:year};
+    
+    
+        console.log(filter);
+        dbo.collection("Trades").find(filter).toArray(function(err, result) {
+            console.log(result);
+            if (!result) return res.status(404).send({message: 'not found'})
+            if (err) throw err;
+            db.close();
+            res.status(200).send(result);
+        });
+    });
+}
 
 //Trae resultados de la semana. Se le envia una fecha calcula que semana es y devuelve resultados
 exports.getByWeek=function(req,res){
