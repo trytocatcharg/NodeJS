@@ -8,6 +8,7 @@ var TradeController = require('../controllers/trade');
 // api.get('/trade/getByWeek/:date', TradeController.getByWeek);
 // api.get('/trade/getByYear/:year', TradeController.getByYear);
 api.get('/trades/', TradeController.getFilter);
+api.get('/trades/group', TradeController.getMarkets);
 //api.get('/trade/', TradeController.getAll);
 
 
